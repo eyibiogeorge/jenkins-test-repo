@@ -9,14 +9,14 @@ pipeline {
             stage('Build Docker Image') {            
                 steps {                
                     script {                    
-                        sh 'docker build -t dockerfile .'
+                        sh 'sudo docker build -t dockerfile .'
                     }
                 }
             }
             stage('Run Docker Container') {           
                 steps {                
                     script {                    
-                        sh 'docker run -itd -p 8081:80 dockerfile'                
+                        sh 'sudo docker run -itd -p 8081:80 dockerfile'                
                     }
                 }
             }
