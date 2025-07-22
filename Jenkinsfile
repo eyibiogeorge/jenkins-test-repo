@@ -18,7 +18,7 @@ pipeline {
             }
         }
         stage('checkout snippet'){
-            stages {
+            steps {
                 checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'for-github-login', url: 'https://github.com/eyibiogeorge/jenkins-test-repo.git']])
                 sh 'ls -lrt'
             }
