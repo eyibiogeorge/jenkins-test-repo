@@ -7,17 +7,13 @@ pipeline {
                 }
             }
             stage('Build Docker Image') {            
-                steps {                
-                    script {                    
+                steps {                                   
                         sh 'sudo docker build -t dockerfile .'
-                    }
                 }
             }
             stage('Run Docker Container') {           
-                steps {                
-                    script {                    
+                steps {                                  
                         sh 'sudo docker run -itd -p 8081:80 dockerfile'                
-                    }
                 }
             }
         }
