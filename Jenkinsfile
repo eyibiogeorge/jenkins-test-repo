@@ -1,32 +1,24 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+pipeline {    
+    agent any    
+        stages {        
+            stage('Connect To Github') {            
+                steps {                    
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'for-github-login', url: 'https://github.com/eyibiogeorge/jenkins-test-repo.git']])
+                }
+            }
+            stage('Build Docker Image') {            
+                steps {                
+                    script {                    
+                        sh 'docker build -t dockerfile .'
+                    }
+                }
+            }
+            stage('Run Docker Container') {           
+                steps {                
+                    script {                    
+                        sh 'docker run -itd -p 8081:80 dockerfile'                
+                    }
+                }
             }
         }
-        stage('Hi') {
-            steps {
-                echo 'Hi everyone!!!'
-            }
-        }
-        stage('test') {
-            steps {
-                echo 'Jenkins test mode activated'
-            }
-        }
-        stage('checkout snippet'){
-            steps {
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'for-github-login', url: 'https://github.com/eyibiogeorge/jenkins-test-repo.git']])
-                sh 'ls -lrt'
-            }
-        }
-        stage('github webhook'){
-            steps {
-                echo 'welcome to automatic github push'
-            }
-        }
-    }
 }
