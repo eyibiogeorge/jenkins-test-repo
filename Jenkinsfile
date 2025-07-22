@@ -23,5 +23,10 @@ pipeline {
                 sh 'ls -lrt'
             }
         }
+        stage('github webhook'){
+            steps {
+                echo 'welcome to automatic github push'
+            }
+        }
     }
 }
